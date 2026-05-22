@@ -1,0 +1,36 @@
+# Operating system noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local editor state
+.vscode/
+.idea/
+*.code-workspace
+
+# Dependency and build output
+node_modules/
+dist/
+build/
+coverage/
+.parcel-cache/
+.vite/
+
+# Logs and runtime dumps
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment and secret material
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+recovery-codes/

@@ -1,0 +1,2 @@
+# Normalize project text files to LF so editor, tests, and Git agree.
+* text=auto eol=lf

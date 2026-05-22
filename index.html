@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#081120" />
+  <meta
+    name="description"
+    content="A calm, ergonomic, modern Flappy Bird with normalized physics, comfortable controls, and a relaxing UI."
+  />
+  <meta property="og:title" content="Flappy Bird — Calm Edition" />
+  <meta property="og:description" content="Gentle physics, bigger gaps, slower pacing — pure relaxation." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <title>Flappy Bird — Calm Edition</title>
+  <link rel="preload" href="style.css" as="style" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="shell">
+    <p id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true">Ready to glide.</p>
+    <p id="controlHelp" class="sr-only">
+      Use Space or click to flap, Shift to soften descent, Down Arrow to dive, Escape to pause,
+      M to mute, and R to restart.
+    </p>
+
+    <header class="panel hero">
+      <p class="eyebrow">Relaxed arcade • ergonomic controls • normalized physics</p>
+
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <h1>🐦 Flappy Bird — Calm Edition</h1>
+          <p class="lede">
+            A softer, more readable, less stressful take on Flappy Bird: gentle pacing,
+            touch-friendly controls, refresh-rate-safe physics, and a UI designed for comfort.
+          </p>
+        </div>
+
+        <div class="status-cluster" aria-label="Design qualities">
+          <span class="status-pill">Relaxed mode</span>
+          <span class="status-pill">60–240Hz safe</span>
+          <span class="status-pill">Procedural audio</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="panel stage" aria-labelledby="playfield-title">
+      <div class="stage-topbar">
+        <div class="stage-copy">
+          <h2 id="playfield-title">Playfield</h2>
+          <p>
+            Larger gaps, slower travel, accessible contrast, and forgiving timing make the run feel playful instead of punishing.
+          </p>
+        </div>
+
+        <div class="toolbar" role="group" aria-label="Game actions">
+          <button class="ui-button" id="restartButton" type="button" aria-controls="game" aria-keyshortcuts="R">Restart</button>
+          <button class="ui-button" id="pauseToggle" type="button" aria-controls="game" aria-keyshortcuts="Escape" aria-pressed="false">Pause</button>
+          <button class="ui-button" id="muteToggle" type="button" aria-controls="game" aria-keyshortcuts="M" aria-pressed="false">Sound on</button>
+          <button class="ui-button" id="drawerToggle" type="button" aria-controls="customizerDrawer" aria-expanded="false" aria-pressed="false">Customize</button>
+        </div>
+      </div>
+
+      <canvas
+        id="game"
+        width="420"
+        height="640"
+        tabindex="0"
+        role="application"
+        aria-label="Interactive Flappy Bird playfield"
+        aria-describedby="controlHelp srStatus"
+        aria-keyshortcuts="Space ArrowUp ArrowDown Shift Escape KeyM KeyR"
+      ></canvas>
+    </section>
+
+    <section class="meta-grid" aria-label="Game guide and controls">
+      <article class="panel card">
+        <h2>Comfortable controls</h2>
+        <ul class="control-list">
+          <li><kbd>Space</kbd><span>Feather flap</span></li>
+          <li><kbd>Click</kbd><span>Tap-friendly flap</span></li>
+          <li><kbd>Shift</kbd><span>Feather the descent</span></li>
+          <li><kbd>↓</kbd><span>Controlled dive</span></li>
+          <li><kbd>Esc</kbd><span>Pause or resume</span></li>
+          <li><kbd>M</kbd><span>Mute or unmute</span></li>
+          <li><kbd>R</kbd><span>Fresh restart</span></li>
+        </ul>
+      </article>
+
+      <article class="panel card">
+        <h2>Comfort-first design notes</h2>
+        <p>
+          Balanced typography, reduced-motion awareness, better spacing, higher legibility,
+          and normalized simulation timing keep the experience calm across laptops, desktops,
+          and high-refresh-rate displays.
+        </p>
+        <p class="microcopy">
+          Tip: the bird is intentionally forgiving now—tap lightly, use <strong>Shift</strong>
+          to soften descents, and play for flow instead of stress.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <aside id="customizerDrawer" class="customizer-drawer" aria-hidden="true" aria-modal="true" role="dialog" aria-labelledby="drawerTitle" tabindex="-1" inert>
+    <div class="drawer-header">
+      <h2 id="drawerTitle">Zen Customizer</h2>
+      <button class="close-btn" id="drawerClose" type="button" aria-label="Close customizer">&times;</button>
+    </div>
+
+    <!-- Theme Section -->
+    <div class="drawer-section">
+      <h3>Cozy Visual Theme</h3>
+      <div class="theme-cluster">
+        <button type="button" class="theme-btn active" data-theme="sunset" aria-pressed="true">🌅 Sunset</button>
+        <button type="button" class="theme-btn" data-theme="midnight" aria-pressed="false">🌌 Midnight</button>
+        <button type="button" class="theme-btn" data-theme="rain" aria-pressed="false">🌧️ Cozy Rain</button>
+        <button type="button" class="theme-btn" data-theme="aurora" aria-pressed="false">✨ Aurora</button>
+      </div>
+    </div>
+
+    <!-- Physics Customization -->
+    <div class="drawer-section">
+      <h3>Calm Physics Overrides</h3>
+      <div class="control-grid-vertical">
+        <div class="control-item">
+          <label class="control-label" for="gravitySlider">
+            Gravity Strength
+            <span class="control-value" id="gravityVal">Calm</span>
+          </label>
+          <input type="range" class="slider-custom" id="gravitySlider" min="1" max="4" value="2" step="1" />
+        </div>
+        <div class="control-item">
+          <label class="control-label" for="speedSlider">
+            Scrolling Speed
+            <span class="control-value" id="speedVal">Chill</span>
+          </label>
+          <input type="range" class="slider-custom" id="speedSlider" min="1" max="4" value="2" step="1" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Volume controls -->
+    <div class="drawer-section">
+      <h3>Soothing Audio Volumes</h3>
+      <div class="control-grid-vertical">
+        <div class="control-item">
+          <label class="control-label" for="musicVolumeSlider">
+            Ambient Background Music
+            <span class="control-value" id="musicVolumeVal">60%</span>
+          </label>
+          <input type="range" class="slider-custom" id="musicVolumeSlider" min="0" max="100" value="60" />
+        </div>
+        <div class="control-item">
+          <label class="control-label" for="sfxVolumeSlider">
+            Synthesizer Sound Effects
+            <span class="control-value" id="sfxVolumeVal">80%</span>
+          </label>
+          <input type="range" class="slider-custom" id="sfxVolumeSlider" min="0" max="100" value="80" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Persistent Stats Dashboard -->
+    <div class="drawer-section">
+      <h3>Zen Dashboard Stats</h3>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-num" id="statZenMinutes">0.0</p>
+          <p class="stat-label">Zen Min Played</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-num" id="statShieldsSaved">0</p>
+          <p class="stat-label">Shields Saved</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-num" id="statRunsCompleted">0</p>
+          <p class="stat-label">Runs Finished</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-num" id="statNearMisses">0</p>
+          <p class="stat-label">Near Misses</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Checklist -->
+    <div class="drawer-section">
+      <h3>Cozy Milestones</h3>
+      <div class="achievements-list">
+        <div class="achievement-item" id="achFirstFlight">
+          <span class="achievement-badge">🕊️</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">First Flight</h4>
+            <p class="achievement-desc">Successfully pass 1 pipe gap</p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achZenMaster">
+          <span class="achievement-badge">🧘</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Zen Master</h4>
+            <p class="achievement-desc">Score 15 points in a single run</p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achShieldSavior">
+          <span class="achievement-badge">🛡️</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Shield Savior</h4>
+            <p class="achievement-desc">Pop a shield and continue flying</p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achThemeExplorer">
+          <span class="achievement-badge">🎨</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Theme Explorer</h4>
+            <p class="achievement-desc">Play under all four visual themes</p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <noscript>
+    <p style="text-align:center;padding:3rem;color:#eef7ff;font-family:system-ui">
+      JavaScript is required to play Flappy Bird — Calm Edition.
+    </p>
+  </noscript>
+  <script src="game.js"></script>
+</body>
+</html>
