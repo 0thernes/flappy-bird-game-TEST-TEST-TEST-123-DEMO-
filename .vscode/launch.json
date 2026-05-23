@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome (Python http.server)",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": false
+    },
+    {
+      "name": "Launch Edge (Python http.server)",
+      "request": "launch",
+      "type": "msedge",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": false
+    },
+    {
+      "name": "Launch Chrome (Live Server)",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:5500",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": false
+    }
+  ]
+}

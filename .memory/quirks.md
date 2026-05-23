@@ -12,7 +12,8 @@ This repo once had 50+ lines of live credentials inside `.gitignore`. The develo
 
 ## Monolithic `game.js`
 
-The entire game engine lives in one ~900-line file. This is intentional for zero-dependency deployment, but it makes navigation harder. Use `grep_search` with function names to find code quickly.
+The entire game engine lives in one ~2100-line file. This is fully intentional for zero-dependency deployment, easy hacking, and optimization for modern AI coding tools. Use `grep_search` to find functions quickly.
+
 
 ## AudioContext unlocking
 

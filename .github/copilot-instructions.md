@@ -6,11 +6,12 @@ Read memory files on-demand — not all at once.
 
 | File | When to read |
 |------|-------------|
-| [.github/.memory/instructions.md](.github/.memory/instructions.md) | How to behave |
-| [.github/.memory/quirks.md](.github/.memory/quirks.md) | When something breaks unexpectedly |
-| [.github/.memory/preferences.md](.github/.memory/preferences.md) | Style/design/naming choices |
-| [.github/.memory/decisions.md](.github/.memory/decisions.md) | Architectural changes |
-| [.github/.memory/security.md](.github/.memory/security.md) | **ALWAYS — before any code change** |
+| [.memory/instructions.md](../.memory/instructions.md) | How to behave |
+| [.memory/quirks.md](../.memory/quirks.md) | When something breaks unexpectedly |
+| [.memory/preferences.md](../.memory/preferences.md) | Style/design/naming choices |
+| [.memory/decisions.md](../.memory/decisions.md) | Architectural changes |
+| [.memory/security.md](../.memory/security.md) | **ALWAYS — before any code change** |
+| [../CLAUDE.md](../CLAUDE.md) | Cross-tool AI context (Claude, Cursor, Continue) |
 
 ## Memory Tools
 

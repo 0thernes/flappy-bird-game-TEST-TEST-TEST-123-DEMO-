@@ -2,44 +2,59 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
   <meta name="color-scheme" content="dark" />
-  <meta
-    name="description"
-    content="A calm, ergonomic, modern Flappy Bird with normalized physics, comfortable controls, and a relaxing UI."
-  />
+  <meta name="theme-color" content="#081120" />
+  <meta name="description" content="A calm, ergonomic, modern Flappy Bird with normalized physics, comfortable controls, and a relaxing UI." />
+
+  <!-- PWA / iOS / Android install metadata -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Flappy Calm" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23081120'/><text x='50' y='72' font-size='64' text-anchor='middle'>🐦</text></svg>" />
+
+  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="Flappy Bird — Calm Edition" />
   <meta property="og:description" content="Gentle physics, bigger gaps, slower pacing — pure relaxation." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="docs/assets/flappy-calm-edition-preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Flappy Bird — Calm Edition" />
+  <meta name="twitter:description" content="Calm, accessible, dependency-free browser game." />
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
   <title>Flappy Bird — Calm Edition</title>
   <link rel="preload" href="style.css" as="style" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#game">Skip to game</a>
+
   <main class="shell">
     <p id="srStatus" class="sr-only" aria-live="polite" aria-atomic="true">Ready to glide.</p>
     <p id="controlHelp" class="sr-only">
-      Use Space or click to flap, Shift to soften descent, Down Arrow to dive, Escape to pause,
-      M to mute, and R to restart.
+      On desktop: Space or click to flap, Shift to soften descent, Down Arrow to dive, Escape to pause,
+      M to mute, R to restart, F for fullscreen.
+      On phone: use the on-screen Brake, Flap, and Dive buttons below the canvas.
     </p>
 
-    <header class="panel hero">
+    <header class="panel hero" id="heroPanel">
       <p class="eyebrow">Relaxed arcade • ergonomic controls • normalized physics</p>
-
       <div class="hero-layout">
         <div class="hero-copy">
           <h1>🐦 Flappy Bird — Calm Edition</h1>
           <p class="lede">
-            A softer, more readable, less stressful take on Flappy Bird: gentle pacing,
-            touch-friendly controls, refresh-rate-safe physics, and a UI designed for comfort.
+            A softer, more readable, less stressful take on Flappy Bird. Gentle pacing,
+            full touch controls on phones, refresh-rate-safe physics, and a UI built for comfort.
           </p>
         </div>
-
         <div class="status-cluster" aria-label="Design qualities">
           <span class="status-pill">Relaxed mode</span>
           <span class="status-pill">60–240Hz safe</span>
           <span class="status-pill">Procedural audio</span>
+          <span class="status-pill">PWA</span>
         </div>
       </div>
     </header>
@@ -48,29 +63,48 @@
       <div class="stage-topbar">
         <div class="stage-copy">
           <h2 id="playfield-title">Playfield</h2>
-          <p>
-            Larger gaps, slower travel, accessible contrast, and forgiving timing make the run feel playful instead of punishing.
-          </p>
+          <p>Larger gaps, slower travel, accessible contrast, and forgiving timing make the run feel playful instead of punishing.</p>
         </div>
-
         <div class="toolbar" role="group" aria-label="Game actions">
           <button class="ui-button" id="restartButton" type="button" aria-controls="game" aria-keyshortcuts="R">Restart</button>
           <button class="ui-button" id="pauseToggle" type="button" aria-controls="game" aria-keyshortcuts="Escape" aria-pressed="false">Pause</button>
-          <button class="ui-button" id="muteToggle" type="button" aria-controls="game" aria-keyshortcuts="M" aria-pressed="false">Sound on</button>
+          <button class="ui-button" id="muteToggle" type="button" aria-controls="game" aria-keyshortcuts="M" aria-pressed="false">🔊 Sound</button>
+          <button class="ui-button" id="fullscreenToggle" type="button" aria-controls="game" aria-keyshortcuts="F" aria-pressed="false">Fullscreen</button>
           <button class="ui-button" id="drawerToggle" type="button" aria-controls="customizerDrawer" aria-expanded="false" aria-pressed="false">Customize</button>
         </div>
       </div>
 
-      <canvas
-        id="game"
-        width="420"
-        height="640"
-        tabindex="0"
-        role="application"
-        aria-label="Interactive Flappy Bird playfield"
-        aria-describedby="controlHelp srStatus"
-        aria-keyshortcuts="Space ArrowUp ArrowDown Shift Escape KeyM KeyR"
-      ></canvas>
+      <div class="canvas-wrap">
+        <canvas
+          id="game"
+          tabindex="0"
+          role="application"
+          aria-label="Interactive Flappy Bird playfield"
+          aria-describedby="controlHelp srStatus"
+          aria-keyshortcuts="Space ArrowUp ArrowDown Shift Escape KeyM KeyR KeyF"
+        ></canvas>
+
+        <!-- Tutorial overlay: shown on first run, dismissable -->
+        <div id="tutorialOverlay" class="tutorial-overlay" aria-hidden="true" role="dialog" aria-label="How to play">
+          <div class="tutorial-card">
+            <h3>How to play</h3>
+            <ul>
+              <li><span class="t-key">Tap / Space</span> — Flap</li>
+              <li><span class="t-key">Brake</span> button or <span class="t-key">Shift</span> — Soften descent</li>
+              <li><span class="t-key">Dive</span> button or <span class="t-key">↓</span> — Controlled dive</li>
+              <li><span class="t-key">Esc</span> — Pause · <span class="t-key">M</span> — Mute · <span class="t-key">R</span> — Restart</li>
+            </ul>
+            <button class="ui-button" id="tutorialDismiss" type="button">Got it — let me glide</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile control bar (visible only on coarse pointers) -->
+      <div id="mobileControls" class="mobile-controls" role="group" aria-label="Touch controls">
+        <button class="m-btn m-brake" id="mBrake" type="button" aria-label="Brake (hold)">⏸ Brake</button>
+        <button class="m-btn m-flap"  id="mFlap"  type="button" aria-label="Flap">🪶 Flap</button>
+        <button class="m-btn m-dive"  id="mDive"  type="button" aria-label="Dive (hold)">⬇ Dive</button>
+      </div>
     </section>
 
     <section class="meta-grid" aria-label="Game guide and controls">
@@ -79,24 +113,24 @@
         <ul class="control-list">
           <li><kbd>Space</kbd><span>Feather flap</span></li>
           <li><kbd>Click</kbd><span>Tap-friendly flap</span></li>
-          <li><kbd>Shift</kbd><span>Feather the descent</span></li>
-          <li><kbd>↓</kbd><span>Controlled dive</span></li>
+          <li><kbd>Brake</kbd><span>On-screen or Shift</span></li>
+          <li><kbd>Dive</kbd><span>On-screen or ↓</span></li>
           <li><kbd>Esc</kbd><span>Pause or resume</span></li>
           <li><kbd>M</kbd><span>Mute or unmute</span></li>
           <li><kbd>R</kbd><span>Fresh restart</span></li>
+          <li><kbd>F</kbd><span>Fullscreen</span></li>
         </ul>
       </article>
-
       <article class="panel card">
         <h2>Comfort-first design notes</h2>
         <p>
           Balanced typography, reduced-motion awareness, better spacing, higher legibility,
           and normalized simulation timing keep the experience calm across laptops, desktops,
-          and high-refresh-rate displays.
+          phones, and high-refresh-rate displays.
         </p>
         <p class="microcopy">
-          Tip: the bird is intentionally forgiving now—tap lightly, use <strong>Shift</strong>
-          to soften descents, and play for flow instead of stress.
+          Tip: the bird is forgiving. Tap lightly, hold Brake on a phone (or Shift on a keyboard)
+          to soften descents, and play for flow.
         </p>
       </article>
     </section>
@@ -108,7 +142,6 @@
       <button class="close-btn" id="drawerClose" type="button" aria-label="Close customizer">&times;</button>
     </div>
 
-    <!-- Theme Section -->
     <div class="drawer-section">
       <h3>Cozy Visual Theme</h3>
       <div class="theme-cluster">
@@ -119,7 +152,6 @@
       </div>
     </div>
 
-    <!-- Physics Customization -->
     <div class="drawer-section">
       <h3>Calm Physics Overrides</h3>
       <div class="control-grid-vertical">
@@ -140,7 +172,6 @@
       </div>
     </div>
 
-    <!-- Volume controls -->
     <div class="drawer-section">
       <h3>Soothing Audio Volumes</h3>
       <div class="control-grid-vertical">
@@ -158,10 +189,22 @@
           </label>
           <input type="range" class="slider-custom" id="sfxVolumeSlider" min="0" max="100" value="80" />
         </div>
+        <button class="ui-button drawer-inline-btn" id="audioTestBtn" type="button">▶ Test audio</button>
       </div>
     </div>
 
-    <!-- Persistent Stats Dashboard -->
+    <div class="drawer-section">
+      <h3>Daily Seed</h3>
+      <label class="toggle-row" for="dailySeedToggle">
+        <input type="checkbox" id="dailySeedToggle" />
+        <span id="dailySeedLabel">Daily Seed OFF (random)</span>
+      </label>
+      <p class="drawer-microcopy">
+        With Daily Seed on, every player on the same day gets the same pipe pattern.
+        Compare scores with friends.
+      </p>
+    </div>
+
     <div class="drawer-section">
       <h3>Zen Dashboard Stats</h3>
       <div class="stats-grid">
@@ -181,10 +224,18 @@
           <p class="stat-num" id="statNearMisses">0</p>
           <p class="stat-label">Near Misses</p>
         </div>
+        <div class="stat-card">
+          <p class="stat-num" id="statLongestSurvival">0s</p>
+          <p class="stat-label">Longest Survival</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-num" id="statStreak">0</p>
+          <p class="stat-label">Current Streak (≥10)</p>
+        </div>
       </div>
+      <button class="ui-button drawer-inline-btn danger" id="resetStatsBtn" type="button">Reset all stats</button>
     </div>
 
-    <!-- Achievements Checklist -->
     <div class="drawer-section">
       <h3>Cozy Milestones</h3>
       <div class="achievements-list">
@@ -193,6 +244,7 @@
           <div class="achievement-details">
             <h4 class="achievement-title">First Flight</h4>
             <p class="achievement-desc">Successfully pass 1 pipe gap</p>
+            <p class="achievement-progress" aria-live="polite"></p>
           </div>
           <span class="achievement-check" aria-hidden="true">✔</span>
         </div>
@@ -201,6 +253,7 @@
           <div class="achievement-details">
             <h4 class="achievement-title">Zen Master</h4>
             <p class="achievement-desc">Score 15 points in a single run</p>
+            <p class="achievement-progress"></p>
           </div>
           <span class="achievement-check" aria-hidden="true">✔</span>
         </div>
@@ -209,6 +262,7 @@
           <div class="achievement-details">
             <h4 class="achievement-title">Shield Savior</h4>
             <p class="achievement-desc">Pop a shield and continue flying</p>
+            <p class="achievement-progress"></p>
           </div>
           <span class="achievement-check" aria-hidden="true">✔</span>
         </div>
@@ -217,6 +271,79 @@
           <div class="achievement-details">
             <h4 class="achievement-title">Theme Explorer</h4>
             <p class="achievement-desc">Play under all four visual themes</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achCalmMarathon">
+          <span class="achievement-badge">⏱️</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Calm Marathon</h4>
+            <p class="achievement-desc">Accumulate 5 zen minutes total</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achFeatherweight">
+          <span class="achievement-badge">🪶</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Featherweight</h4>
+            <p class="achievement-desc">Score 30 points in a single run</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achFeatherlight">
+          <span class="achievement-badge">✨</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Featherlight</h4>
+            <p class="achievement-desc">Score 50 points in a single run</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achStreakKeeper">
+          <span class="achievement-badge">🎯</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Streak Keeper</h4>
+            <p class="achievement-desc">5 near misses in one run</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achBrakeMaster">
+          <span class="achievement-badge">🛑</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Brake Master</h4>
+            <p class="achievement-desc">Use brake 10 times in one run</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achDiver">
+          <span class="achievement-badge">🪂</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Diver</h4>
+            <p class="achievement-desc">Use dive 10 times in one run</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achIronCalm">
+          <span class="achievement-badge">🧊</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Iron Calm</h4>
+            <p class="achievement-desc">3 consecutive runs scoring ≥ 10</p>
+            <p class="achievement-progress"></p>
+          </div>
+          <span class="achievement-check" aria-hidden="true">✔</span>
+        </div>
+        <div class="achievement-item" id="achLongHaul">
+          <span class="achievement-badge">🌙</span>
+          <div class="achievement-details">
+            <h4 class="achievement-title">Long Haul</h4>
+            <p class="achievement-desc">Survive 60 seconds in a single run</p>
+            <p class="achievement-progress"></p>
           </div>
           <span class="achievement-check" aria-hidden="true">✔</span>
         </div>
@@ -229,6 +356,6 @@
       JavaScript is required to play Flappy Bird — Calm Edition.
     </p>
   </noscript>
-  <script src="game.js"></script>
+  <script src="game.js" defer></script>
 </body>
 </html>

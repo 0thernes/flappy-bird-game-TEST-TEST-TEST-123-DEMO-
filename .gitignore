@@ -3,8 +3,11 @@
 Thumbs.db
 Desktop.ini
 
-# Local editor state
-.vscode/
+# Local editor state — we DO commit a small set of shared configs
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
 .idea/
 *.code-workspace
 

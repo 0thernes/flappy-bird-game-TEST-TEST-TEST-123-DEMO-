@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ritwickdey.LiveServer",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-rename-tag",
+    "pranaygp.vscode-css-peek"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.cpptools",
+    "ms-vscode.cpptools-extension-pack"
+  ]
+}

@@ -45,3 +45,7 @@ Style, tone, and design choices for this project.
 - Procedural only. No external audio files.
 - Default volume is low (`0.12` or lower).
 - Music is ambient, not foreground.
+
+## Language
+
+- English-only baseline. No localized i18n support needed. Automatic browser/OS translators handle translation natively.

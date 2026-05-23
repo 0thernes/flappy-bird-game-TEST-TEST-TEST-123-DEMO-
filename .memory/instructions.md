@@ -15,6 +15,8 @@ How Copilot should behave in this project.
 - Use `// ...existing code...` comments to skip unchanged regions.
 - Never repeat existing code in edits.
 - Test assumptions with `read_file` before editing.
+- Optimize for AI-native pairing. Keep the complete engine monolithic and single-file (~2000 lines). This enables full context processing in modern LLMs.
+
 
 ## Game-specific rules
 

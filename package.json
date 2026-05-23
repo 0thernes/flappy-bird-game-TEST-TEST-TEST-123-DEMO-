@@ -1,12 +1,33 @@
 {
   "name": "flappy-bird-calm-edition",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "private": true,
-  "description": "A calm, accessible, dependency-free Flappy Bird canvas game.",
+  "description": "A calm, accessible, dependency-free Flappy Bird canvas game for browser and mobile.",
   "type": "module",
   "scripts": {
     "check": "node --check game.js && node tests/smoke-test.mjs",
     "serve": "python -m http.server 8000 --bind 127.0.0.1"
   },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "flappy-bird",
+    "browser-game",
+    "canvas",
+    "web-audio",
+    "accessibility",
+    "pwa",
+    "zero-dependencies",
+    "vanilla-js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0thernes/flappy-bird-calm-edition.git"
+  },
+  "bugs": {
+    "url": "https://github.com/0thernes/flappy-bird-calm-edition/issues"
+  },
+  "homepage": "https://0thernes.github.io/flappy-bird-calm-edition/",
   "license": "AGPL-3.0-or-later"
 }
