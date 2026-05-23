@@ -3,6 +3,8 @@
 
 This document contains a highly rigorous, hyper-strict, line-by-line technical inspection and code-level audit of the **Flappy Bird — Calm Edition** codebase. Each of the **250 evaluation points** is unique, actionable, and grounded in the actual codebase configuration and implementation, keeping in mind the single-developer scope, the hackable open-source nature of the project, and its deployment on GitHub Pages.
 
+**Verification note:** This audit targets the current `v2.0.1` implementation. Source references are tied to the named files and UI/code surfaces; exact line numbers may drift as documentation and metadata evolve.
+
 ---
 
 ## 🗂️ Audit Dimension Directory
@@ -24,7 +26,7 @@ This document contains a highly rigorous, hyper-strict, line-by-line technical i
 
 1. **Strict HTML5 Document Mode:** Line 1 starts with `<!DOCTYPE html>`. This is correct, as it prevents modern layout engines (Blink, WebKit, Gecko) from falling back to quirks mode.
 2. **Explicit Language Mapping:** Line 2 declares `<html lang="en" dir="ltr">`. This is appropriate, as it establishes English as the primary language and sets a left-to-right text direction.
-3. **Advanced Viewport Scale Configurations:** Line 5 uses `<meta name="viewport" content="width=device-width, initial-value=1.0, interactive-widget=resizes-content" />`. The addition of `interactive-widget=resizes-content` ensures the viewport adjusts dynamically when mobile virtual keyboards slide open, preventing layout clipping.
+3. **Advanced Viewport Scale Configuration:** The HTML head uses `<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />`. This combines the correct `initial-scale` token, safe-area support, and virtual-keyboard resizing behavior for phone browsers.
 4. **Color-Scheme Performance Hint:** Line 6 uses `<meta name="color-scheme" content="dark" />`. This allows the browser to render default UI elements (like scrollbars and form fields) with a dark theme immediately, avoiding flash-of-white page loads.
 5. **Descriptive Meta Tag Layout:** Lines 7–10 contain a clean `<meta name="description" content="..." />`. This matches the content in the body, providing accurate search engine snippets.
 6. **Open Graph Title Integration:** Line 11 declares `<meta property="og:title" content="Flappy Bird — Calm Edition" />`. This matches the document's `<title>`, ensuring social media sharing cards render cleanly.
@@ -44,15 +46,15 @@ This document contains a highly rigorous, hyper-strict, line-by-line technical i
 16. **Eyebrow Description Styling:** Line 28 uses a separate `<p class="eyebrow">` tag to organize metadata, separating it cleanly from the main title.
 17. **Unified Hero Layout Grid:** Line 30 organizes the hero section into a clean `.hero-layout` grid, separating the titles from the status badges.
 18. **Structured Header Hierarchy:** Line 32 uses a single `<h1>` tag (`🐦 Flappy Bird — Calm Edition`), establishing a clear document heading hierarchy.
-19. **Curated Status Pill Highlights:** Lines 39–43 display high-contrast status badges ("Relaxed mode", "60–240Hz safe", "Procedural audio"), clearly highlighting the game's core features.
+19. **Curated Status Pill Highlights:** The hero displays high-contrast status badges ("Relaxed mode", "60–240Hz safe", "Procedural audio", "PWA"), clearly highlighting the game's core features.
 20. **Playfield Section Boundaries:** Line 47 wraps the game canvas inside a semantic `<section class="panel stage" aria-labelledby="playfield-title">` element, establishing a clear accessibility landmark.
-21. **Centralized Toolbar Layout:** Line 56 uses a semantic `<div class="toolbar" role="group" aria-label="Game actions">` layout, organizing functional buttons (Restart, Pause, Sound, Customize) into a unified keyboard group.
-22. **Interactive Controls Key Bindings:** Buttons on lines 57–60 include explicit `aria-keyshortcuts` attributes, informing power users of available hotkeys.
-23. **Canvas Element Accessibility Configuration:** Line 64 configures the canvas as an interactive application landmark:
+21. **Centralized Toolbar Layout:** The playfield uses a semantic `<div class="toolbar" role="group" aria-label="Game actions">` layout, organizing functional buttons (Restart, Pause, Sound, Fullscreen, Customize) into a unified keyboard group.
+22. **Interactive Controls Key Bindings:** Toolbar buttons include explicit `aria-keyshortcuts` attributes for Restart, Pause, Sound, and Fullscreen, informing power users of available hotkeys.
+23. **Canvas Element Accessibility Configuration:** The canvas is configured as an interactive application landmark while leaving physical pixel sizing to the DPR-aware engine:
     ```html
-    <canvas id="game" width="420" height="640" tabindex="0" role="application" aria-label="..." aria-describedby="..." aria-keyshortcuts="..."></canvas>
+    <canvas id="game" tabindex="0" role="application" aria-label="..." aria-describedby="..." aria-keyshortcuts="..."></canvas>
     ```
-    The addition of `tabindex="0"` allows users to focus on the canvas using the keyboard, enabling direct inputs.
+    The addition of `tabindex="0"` allows users to focus on the canvas using the keyboard, while `game.js` applies `CONFIG.CANVAS_W`, `CONFIG.CANVAS_H`, and the active device pixel ratio to the backing store.
 24. **Helpful UI Panel Typography:** Line 76 uses a `<section class="meta-grid" aria-label="Game guide and controls">` layout to organize instructions and design notes into a two-column grid.
 25. **Organized Controls Card:** Line 77 organizes keyboard commands into a semantic `<kbd>` layout inside an `<article class="panel card">` card, improving readability.
 
@@ -234,7 +236,7 @@ This document contains a highly rigorous, hyper-strict, line-by-line technical i
     bird.velocity += state.gravity * dt; bird.y += bird.velocity * dt;
     ```
 79. **Safe Velocity Limits:** Terminal rise (`state.terminalRise = -2.75`) and terminal fall (`state.terminalFall = 2.35`) limits prevent the character from clipping through boundaries.
-80. **Predictable Base Resolution:** The canvas uses a fixed internal resolution of `420×640` pixels, keeping collision coordinates consistent regardless of how the browser scales the canvas.
+80. **Predictable Base Resolution:** The engine uses `CONFIG.CANVAS_W = 420` and `CONFIG.CANVAS_H = 640` as the logical coordinate system, then scales the backing store by device pixel ratio so collision coordinates remain consistent regardless of CSS size.
 81. **Dynamic Character Rotation:** The bird's rotation is linked to its vertical velocity, easing smoothly into descents:
     ```javascript
     const targetRotation = Math.max(-0.42, Math.min(bird.velocity * 0.12, 0.34));
@@ -786,9 +788,9 @@ This document contains a highly rigorous, hyper-strict, line-by-line technical i
     ```javascript
     assert.match(textFiles.readme, /Feather Shield/i, ...);
     ```
-236. **Clean Package Configuration:** The project configuration is kept clean and lightweight, listing only the version and running scripts:
+236. **Clean Package Configuration:** The project configuration is kept clean and lightweight, with current project metadata, zero dependencies, and a small script surface:
     ```json
-    "name": "flappy-bird-calm-edition", "version": "1.0.0", "private": true
+    "name": "flappy-bird-calm-edition", "version": "2.0.1", "private": true
     ```
 237. **Standard Script Definitions:** The configuration defines standard scripts for validation and local hosting:
     ```json
