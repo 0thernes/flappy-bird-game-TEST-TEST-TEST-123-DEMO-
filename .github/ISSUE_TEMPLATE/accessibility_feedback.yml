@@ -1,0 +1,36 @@
+name: Accessibility Feedback
+description: Report keyboard, screen-reader, contrast, or motion issues.
+title: '[Accessibility]: '
+labels: ['accessibility']
+body:
+  - type: textarea
+    id: barrier
+    attributes:
+      label: What accessibility barrier did you hit?
+      placeholder: I could not...
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Keyboard
+        - Screen reader
+        - Reduced motion
+        - Contrast or readability
+        - Focus management
+        - Audio
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: tech
+    attributes:
+      label: Browser, device, or assistive tech
+      placeholder: Firefox + NVDA, Safari + VoiceOver, keyboard only...
+  - type: textarea
+    id: expected
+    attributes:
+      label: What would have worked better?
+      placeholder: I expected...

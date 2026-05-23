@@ -1,0 +1,45 @@
+name: Bug Report
+description: Report something broken in Calm Edition.
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the game smooth and friendly.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Tell us what broke and what you expected instead.
+      placeholder: The bird...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Clear steps help us fix the issue quickly.
+      placeholder: |
+        1. Open the game
+        2. Press...
+        3. See...
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: Chrome 126, Firefox 127, Safari 17...
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device or OS
+      placeholder: Windows 11 desktop, iPhone, macOS...
+  - type: textarea
+    id: notes
+    attributes:
+      label: Extra notes
+      description: Screenshots, console errors, or anything else useful.

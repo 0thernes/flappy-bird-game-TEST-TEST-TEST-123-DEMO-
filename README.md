@@ -1,101 +1,137 @@
-# 🐦 Flappy Bird — Calm Edition
+# Flappy Bird — Calm Edition
 
-A softer, more accessible, less stressful take on Flappy Bird. Built with vanilla HTML, CSS, and JavaScript — zero dependencies, zero external assets.
+[![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-2f855a)](LICENSE.txt)
+[![Vanilla JS](https://img.shields.io/badge/stack-vanilla%20JS-f7df1e)](game.js)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-0f766e)](package.json)
+[![Accessible Arcade](https://img.shields.io/badge/accessibility-first-2563eb)](README.md#accessibility)
 
-## ✨ What Makes It "Calm"
+**A polished, friendly, browser-first Flappy Bird built for flow instead of frustration.**
 
-Default settings use the "Calm" (gravity) and "Chill" (speed) presets. The customizer lets you adjust from Ultra-Light to Heavy.
+Calm Edition keeps the instant arcade loop people love, then smooths the rough edges:
+gentler physics, readable timing, cozy themes, procedural audio, accessibility, stats,
+achievements, and a one-hit Feather Shield. No build step. No external assets. Just open
+the game and glide.
 
-| Feature             | Default (Calm/Chill) | Original Flappy Bird |
-| ------------------- | -------------------- | -------------------- |
-| Gravity             | 0.052                | ~0.25                |
-| Flap impulse        | -2.35                | ~-4.0                |
-| Terminal fall speed | 2.35                 | ~6.0                 |
-| Pipe gap            | 184px                | ~100px               |
-| Pipe speed          | 1.15                 | ~2.0                 |
-| Spawn interval      | 170 frames           | ~100 frames          |
+[![Flappy Bird Calm Edition preview showing the polished hero and playfield.](docs/assets/flappy-calm-edition-preview.png)](https://0thernes.github.io/flappy-bird-calm-edition/)
 
-The result: gentle pacing, forgiving timing, and a bird that feels like it's gliding rather than fighting gravity. Use the Zen Customizer to tune these values to your preference.
+[Play the live demo](https://0thernes.github.io/flappy-bird-calm-edition/) ·
+[Run locally](#quick-start) ·
+[Features](#features) ·
+[Contribute](#contributing)
 
-## 🎮 Controls
+## Why It Feels Better
 
-| Key / Input           | Action                     |
-| --------------------- | -------------------------- |
-| `Space` or `Arrow Up` | Feather flap               |
-| `Click` or `Tap`      | Tap-friendly flap          |
-| `Shift` (hold)        | Soften descent (air brake) |
-| `Arrow Down` (hold)   | Controlled dive            |
-| `Escape`              | Pause / resume             |
-| `M`                   | Mute / unmute              |
-| `R`                   | Fresh restart              |
+| Design Goal            | What Calm Edition Does                                                                         |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| Softer difficulty      | Larger pipe gaps, slower travel, gentler gravity, and slower terminal fall speed.              |
+| More player expression | Hold `Shift` to brake, hold `Arrow Down` to dive, and tune physics in the Zen Customizer.      |
+| More delight           | Themes, particle bursts, procedural music, expressive bird emotions, and cozy achievements.    |
+| Less punishment        | Feather Shield absorbs one collision and gives the bird a graceful recovery moment.            |
+| Better reliability     | Refresh-rate-independent physics stays consistent across 60Hz, 144Hz, and 240Hz displays.      |
+| Better inclusion       | Keyboard support, ARIA live updates, reduced motion, and high-contrast awareness are built in. |
 
-## 🎨 Features
+## Features
 
-- **Procedural audio** — All sounds synthesized in real time via the Web Audio API. No MP3s, no OGGs, no network requests.
-- **Emotion system** — The bird reacts to danger, success, and failure with 5 emotional states (calm, happy, scared, determined, dizzy) that drive pupil size, eyebrow shape, body color, blush, and more.
-- **Eye tracking** — The bird's pupil tracks the nearest pipe gap, giving it a lifelike awareness.
-- **Dynamic difficulty** — Speed increases by 3% every 6 pipes, capped at 1.18×. Moving pipes appear after score 14.
-- **Particle effects** — Sparkles on score, burst on death. Respects `prefers-reduced-motion`.
-- **Screen shake** — Subtle impact feedback on death. Disabled for users who prefer reduced motion.
-- **Music** — Gentle C-major arpeggio loop, synthesized in real time.
-- **Accessibility** — Full ARIA support, screen reader announcements, keyboard navigation, high-contrast support, and reduced-motion awareness.
-- **Frame-rate independent physics** — Runs correctly at 60Hz, 144Hz, or 240Hz.
-- **Zen Customizer** — Adjust gravity, speed, music/SFX volume, and choose from 4 visual themes (Sunset, Midnight, Rain, Aurora). Preferences persist in `localStorage`.
-- **Feather Shield** — Collectible power-up that absorbs one collision, pops the bird upward, and grants brief invincibility.
-- **Persistent stats** — Track zen minutes, shields saved, runs completed, and near misses across sessions.
-- **Achievements** — Unlock milestones like First Flight, Zen Master, Shield Savior, and Theme Explorer.
+- **Calm physics presets** — Tune gravity and speed from gentle to lively.
+- **Zen Customizer** — Adjust physics, music volume, sound volume, and visual theme.
+- **Four themes** — Sunset, Midnight, Cozy Rain, and Aurora each change colors, weather, and music.
+- **Feather Shield** — A collectible bubble that absorbs one crash and grants brief invincibility.
+- **Expressive bird** — The bird reacts with calm, happy, scared, determined, and dizzy states.
+- **Eye tracking** — Pupils track the nearest safe gap for a lively, readable character.
+- **Procedural audio** — Web Audio creates every flap, chime, shield sound, and music note.
+- **Stats and achievements** — Track zen minutes, shields saved, runs completed, and near misses.
+- **Zero dependencies** — Pure HTML, CSS, and JavaScript. No bundler, package install, CDN, or assets.
 
-## 🚀 How to Run
+## Quick Start
 
-### Option 1: Open directly
+### Play In A Browser
 
-Open `index.html` in any modern browser.
-
-### Option 2: Live server (recommended)
-
-If you have VS Code with the Live Server extension, right-click `index.html` and select **Open with Live Server**.
-
-Or from the terminal:
+Open `index.html` directly, or use a tiny local server:
 
 ```bash
-# Python
 python -m http.server 8000
-
-# Node.js
-npx serve .
-
-# PHP
-php -S localhost:8000
 ```
 
-Then open `http://localhost:8000`.
+Then visit `http://localhost:8000`.
 
-## 📁 Files
+### Check The Project
 
-| File                              | Purpose                                                          |
-| --------------------------------- | ---------------------------------------------------------------- |
-| `index.html`                      | Semantic page shell, accessibility layer, canvas container       |
-| `style.css`                       | Modern CSS with `@layer`, container queries, fluid design system |
-| `game.js`                         | Game engine: physics, rendering, audio, input, state management  |
-| `README.md`                       | This file                                                        |
-| `LICENSE.txt`                     | AGPL-3.0-or-later license text                                  |
-| `.gitignore`                      | Standard ignore patterns                                         |
-| `.vscode/`                        | VS Code settings for JavaScript development                      |
-| `.memory/`                        | AI context memory for long-term project knowledge                |
-| `.github/copilot-instructions.md` | AI behavior contract                                             |
+```bash
+npm run check
+```
 
-## 🛠️ Tech Stack
+The check runs JavaScript syntax validation plus a smoke test for the core repo promises:
+canvas, accessibility hooks, customizer, storage helpers, and security-sensitive ignore rules.
 
-- **HTML5** — Semantic markup, ARIA, Open Graph
-- **CSS4** — `@layer`, `@property`, container queries, `clamp()`, `dvh`
-- **Vanilla JS** — No frameworks, no bundlers, no dependencies
-- **Web Audio API** — Procedural sound synthesis
-- **Canvas 2D** — High-performance rendering
+## Controls
 
-## 📝 License
+| Input                 | Action            |
+| --------------------- | ----------------- |
+| `Space` or `Arrow Up` | Feather flap      |
+| `Click` or `Tap`      | Tap-friendly flap |
+| Hold `Shift`          | Soften descent    |
+| Hold `Arrow Down`     | Controlled dive   |
+| `Escape`              | Pause or resume   |
+| `M`                   | Mute or unmute    |
+| `R`                   | Fresh restart     |
 
-AGPL-3.0-or-later — this is free software. If you run a modified version on a public server, you must offer users the source code.
+## Accessibility
+
+Calm Edition treats accessibility as part of the game design, not a side quest.
+
+- Fully keyboard-playable controls.
+- Screen-reader status updates through an ARIA live region.
+- `prefers-reduced-motion` support for motion, particles, trails, shake, and weather density.
+- High-contrast media query support.
+- Modal-style customizer drawer with focus management and inert background behavior.
+
+## Engineering Notes
+
+| Area         | Approach                                                                          |
+| ------------ | --------------------------------------------------------------------------------- |
+| Rendering    | Canvas 2D game world with DOM UI chrome for accessible controls.                  |
+| Audio        | Web Audio oscillators, scheduled on the AudioContext clock for stable timing.     |
+| Physics      | Normalized delta time, capped lag spikes, semi-implicit Euler integration.        |
+| Performance  | Pre-allocated particle and weather pools avoid gameplay allocation churn.         |
+| Persistence  | Guarded `localStorage` helpers for best score, settings, stats, and achievements. |
+| Distribution | Static files only. The game works from disk, localhost, or GitHub Pages.          |
+
+## Repository Map
+
+| Path                      | Purpose                                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------------------ |
+| `index.html`              | Semantic page shell, controls, canvas, customizer drawer, and ARIA regions.                |
+| `style.css`               | Responsive dark UI, panels, controls, customizer, themes, and accessibility media queries. |
+| `game.js`                 | Game engine: physics, rendering, audio, input, persistence, stats, and achievements.       |
+| `tests/smoke-test.mjs`    | Lightweight repo smoke checks.                                                             |
+| `docs/assets/`            | README and repository presentation assets.                                                 |
+| `.github/ISSUE_TEMPLATE/` | Friendly issue forms for bugs, ideas, and accessibility feedback.                          |
+| `.memory/`                | Project context notes for future maintainers and AI assistants.                            |
+| `LICENSE.txt`             | AGPL-3.0-or-later license text.                                                            |
+
+## Contributing
+
+Contributions are welcome when they keep the game calm, accessible, dependency-free, and easy
+to run. Start with [CONTRIBUTING.md](CONTRIBUTING.md), then use the issue templates for bugs,
+feature ideas, or accessibility feedback.
+
+Good first areas:
+
+- Theme polish and seasonal palettes.
+- Accessibility testing across browsers and assistive tech.
+- Documentation improvements.
+- Tiny quality-of-life improvements that preserve the no-build-step setup.
+
+## Support
+
+Need help running the game or reporting a problem? See [SUPPORT.md](SUPPORT.md).
+
+## License
+
+AGPL-3.0-or-later. See [LICENSE.txt](LICENSE.txt).
+
+If you run a modified version on a public server, offer users the matching source code.
 
 ---
 
-_Built with care for players who prefer flow over frustration._
+Built for players who want the joy of Flappy Bird with a little more grace in the wings.

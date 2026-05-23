@@ -1,0 +1,42 @@
+name: Feature Request
+description: Suggest a calm, player-friendly improvement.
+title: '[Idea]: '
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good ideas keep the game simple, accessible, and fun.
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to add or improve?
+      placeholder: A new theme, setting, quality-of-life improvement...
+    validations:
+      required: true
+  - type: textarea
+    id: player-benefit
+    attributes:
+      label: How does this help players?
+      placeholder: It makes the game calmer because...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Gameplay
+        - Visual theme
+        - Audio
+        - Accessibility
+        - Documentation
+        - Testing
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints to keep in mind
+      description: This project avoids dependencies, build steps, and stressful defaults.
