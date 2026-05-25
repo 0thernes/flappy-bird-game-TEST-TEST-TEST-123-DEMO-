@@ -33,7 +33,7 @@
 
 ## 2. File System Hierarchy
 
-```
+```text
 flappy-bird-calm-edition/
 ├── .claude/
 │   └── settings.local.json          # Claude-specific workspace settings

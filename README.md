@@ -1,63 +1,49 @@
-# Flappy Bird — Calm Edition
+# Flappy Bird - Calm Edition
 
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-2f855a)](LICENSE.txt)
 [![Vanilla JS](https://img.shields.io/badge/stack-vanilla%20JS-f7df1e)](game.js)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-0f766e)](package.json)
 [![Accessible Arcade](https://img.shields.io/badge/accessibility-first-2563eb)](README.md#accessibility)
 
-**A polished, friendly, browser-first Flappy Bird built for flow instead of frustration.**
+A browser-first Flappy Bird remix tuned for comfort instead of punishment.
 
-Calm Edition keeps the instant arcade loop people love, then smooths the rough edges:
-gentler physics, readable timing, cozy themes, procedural audio + reverb, accessibility, stats,
-12 achievements, a one-hit Feather Shield, a daily-seed mode, and a full on-screen control bar
-for phones (Brake / Flap / Dive). Installable as a PWA on iOS and Android, with a small service
-worker that caches the app shell after the first localhost/HTTPS visit. No build step. No external
-runtime assets. Just open the game and glide.
+Calm Edition keeps the fast arcade loop, then softens the failure edges: slower pacing, gentler physics, readable visuals, full mobile controls, procedural audio, a forgiving Feather Shield, daily seeded runs, and a small offline-ready PWA shell. There is no build step, no runtime dependency, and no remote asset requirement.
 
-[![Flappy Bird Calm Edition preview showing the polished hero and playfield.](docs/assets/flappy-calm-edition-preview.png)](https://0thernes.github.io/flappy-bird-calm-edition/)
+[![Flappy Bird Calm Edition preview showing the hero panel and playfield.](docs/assets/flappy-calm-edition-preview.png)](https://0thernes.github.io/flappy-bird-calm-edition/)
 
-[Play the live demo](https://0thernes.github.io/flappy-bird-calm-edition/) ·
-[Run locally](#quick-start) ·
-[Features](#features) ·
-[Contribute](#contributing)
+[Play the live demo](https://0thernes.github.io/flappy-bird-calm-edition/) |
+[Architecture guide](docs/architecture_master_blueprint.md) |
+[Contributing](CONTRIBUTING.md) |
+[Support](SUPPORT.md)
 
-## Why It Feels Better
+## What Makes This Version Different
 
-| Design Goal            | What Calm Edition Does                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------------------------- |
-| Softer difficulty      | Larger pipe gaps, slower travel, gentler gravity, slower terminal fall, circle hitbox.         |
-| Full mobile depth      | On-screen Brake / Flap / Dive buttons on phones — full keyboard depth, no controls hidden.     |
-| More player expression | Hold Brake (or `Shift`), hold Dive (or `↓`), and tune physics in the Zen Customizer.           |
-| More delight           | Themes, reverb, ambient music, particle bursts, expressive bird emotions, cozy achievements.   |
-| Less punishment        | Feather Shield absorbs one collision and gives the bird a graceful recovery moment.            |
-| Better reliability     | Delta-time physics + DPR-sharp canvas across 60Hz, 144Hz, 240Hz displays and Retina/4K phones. |
-| Better inclusion       | Keyboard + skip-link, ARIA live updates, reduced-motion, reduced-transparency, forced-colors.  |
-| PWA-ready              | Installable via Add-to-Home-Screen on iOS and Android. Offline app shell after first visit.    |
+| Goal | Calm Edition approach |
+| --- | --- |
+| Less frustration | Larger gaps, slower pipe speed, softer gravity, gentler terminal fall, forgiving hitboxes |
+| Better mobile play | Fixed Brake / Flap / Dive controls on coarse-pointer devices |
+| Better readability | High-contrast UI, focused status panels, expressive bird states, clear score feedback |
+| More player control | Brake, dive, theme selection, physics tuning, music and sound sliders |
+| Better reliability | DPR-aware canvas, normalized delta-time physics, guarded storage helpers |
+| Better inclusion | Keyboard support, ARIA live updates, reduced-motion handling, focus-managed drawer |
 
-## Features
+## Feature Highlights
 
-- **Mobile control bar** — On-screen Brake / Flap / Dive on coarse-pointer devices.
-- **PWA install + offline shell** — Add to Home Screen on iOS and Android via a real manifest and service worker.
-- **DPR-sharp canvas** — Crisp on Retina, 2× / 3× phones, and 4K monitors.
-- **Calm physics presets** — Tune gravity and speed from gentle to lively.
-- **Daily Seed mode** — Deterministic pipe pattern by UTC date for friendly comparison.
-- **Zen Customizer** — Physics sliders, audio volumes, theme picker, daily-seed toggle, audio test, reset stats.
-- **Four themes** — Sunset, Midnight, Cozy Rain, and Aurora each change colors, weather, and music.
-- **Feather Shield** — A collectible bubble that absorbs one crash and grants brief invincibility.
-- **Expressive bird** — Calm, happy, scared, determined, and dizzy states with blush, smile, and dizzy swirls.
-- **Eye tracking** — Pupils track the nearest safe gap for a lively, readable character.
-- **Procedural audio with reverb** — Web Audio creates every tone; convolution reverb gives real ambient space.
-- **12 achievements** — From First Flight to Long Haul, each with live progress display.
-- **Persistent stats** — Zen minutes, shields saved, runs, near misses, longest survival, current streak.
-- **Tutorial overlay** — Shown once on first run; the dismiss button starts the first glide.
-- **Fullscreen toggle** — `F` key or button.
-- **Zero dependencies** — Pure HTML, CSS, and JavaScript. No bundler, package install, CDN, or assets.
+- Calm physics tuned for readable timing.
+- Full mobile control bar with Brake, Flap, and Dive.
+- Four themes with matching atmosphere and music.
+- Daily Seed mode for repeatable runs by date.
+- Feather Shield for one graceful recovery.
+- Procedural music and sound effects built with Web Audio.
+- Persistent local stats and 12 achievements.
+- Installable PWA with a tiny offline app shell.
+- Zero dependencies and zero build tooling.
 
 ## Quick Start
 
-### Play In A Browser
+### Open The Game
 
-Open `index.html` directly, or use a tiny local server:
+Open `index.html` directly, or run a tiny local server:
 
 ```bash
 python -m http.server 8000
@@ -65,101 +51,101 @@ python -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-### Check The Project
+### Run The Checks
 
 ```bash
 npm run check
 ```
 
-The check runs JavaScript syntax validation plus a smoke test for the core repo promises:
-canvas, accessibility hooks, customizer, storage helpers, and security-sensitive ignore rules.
+That command verifies:
+
+- JavaScript syntax for `game.js`
+- JavaScript syntax for `service-worker.js`
+- The repo smoke test in `tests/smoke-test.mjs`
 
 ## Controls
 
-| Input                              | Action            |
-| ---------------------------------- | ----------------- |
-| `Space` / `Arrow Up` / Click / Tap | Feather flap      |
-| On-screen **Brake** / Hold `Shift` | Soften descent    |
-| On-screen **Dive**  / Hold `↓`     | Controlled dive   |
-| `Escape`                           | Pause or resume   |
-| `M`                                | Mute or unmute    |
-| `R`                                | Fresh restart     |
-| `F`                                | Fullscreen        |
+| Input | Action |
+| --- | --- |
+| `Space` / `Arrow Up` / click / tap | Flap |
+| hold `Shift` / on-screen Brake | Slow descent |
+| hold `Arrow Down` / on-screen Dive | Controlled dive |
+| `Escape` | Pause or resume |
+| `M` | Mute or unmute |
+| `R` | Restart run |
+| `F` | Toggle fullscreen |
 
-On a phone, the on-screen control bar stays fixed near the bottom of the viewport with full Brake / Flap / Dive buttons.
+On phones and tablets, the mobile control bar stays visible near the bottom of the screen so the core actions never depend on hidden gestures.
 
-## Accessibility
+## Architecture At A Glance
 
-Calm Edition treats accessibility as part of the game design, not a side quest.
+The project is intentionally small and flat:
 
-- Fully keyboard-playable controls.
-- Screen-reader status updates through an ARIA live region.
-- `prefers-reduced-motion` support for motion, particles, trails, shake, and weather density.
-- High-contrast media query support.
-- Modal-style customizer drawer with focus management and inert background behavior.
+- `index.html` is the semantic shell, UI layout, mobile controls, drawer, and PWA metadata.
+- `style.css` owns layout, theme tokens, accessibility media queries, and component styling.
+- `game.js` contains the full runtime engine: physics, rendering, audio, input, persistence, and UI state.
+- `manifest.webmanifest` and `service-worker.js` provide installation and offline shell behavior.
+- `tests/smoke-test.mjs` protects the repo promises without bringing in a test framework.
 
-## Engineering Notes
-
-| Area         | Approach                                                                                |
-| ------------ | --------------------------------------------------------------------------------------- |
-| Rendering    | Canvas 2D + DPR scaling. Offscreen sprite caches for sky / clouds / bird-per-emotion.   |
-| Audio        | Web Audio with master gain, convolution reverb, lowpass. Scheduled on AudioContext clock. |
-| Physics      | Normalized delta time (`dt`), capped lag spikes, semi-implicit Euler. True circle hitbox. |
-| Performance  | Pre-allocated particle / weather pools. Nearest-pipe cache. Frame-error rate limiting.    |
-| Persistence  | Guarded `localStorage` helpers, throttled save on `visibilitychange` and `beforeunload`.  |
-| PWA          | `manifest.webmanifest`, `service-worker.js`, `apple-touch-icon`, `theme-color`. Installable on iOS / Android with an offline shell after first visit. |
-| Distribution | Static files only. The game works from disk, localhost, GitHub Pages, or any static host. |
-
-## Browser Support
-
-- Chrome / Edge 105+
-- Firefox 128+
-- Safari 16.4+
-- Samsung Internet 21+
-- iOS / Android Chrome and Safari (current)
+For the deeper runtime walkthrough, read [docs/architecture_master_blueprint.md](docs/architecture_master_blueprint.md).
 
 ## Repository Map
 
-| Path                      | Purpose                                                                                    |
-| ------------------------- | ------------------------------------------------------------------------------------------ |
-| `index.html`              | Semantic shell, canvas, mobile control bar, customizer drawer, tutorial, PWA meta tags.    |
-| `style.css`               | Responsive dark UI, layered cascade, themes, accessibility media queries, mobile controls. |
-| `game.js`                 | Game engine: physics, rendering, audio (with reverb), input, persistence, achievements.    |
-| `manifest.webmanifest`    | PWA install metadata.                                                                      |
-| `service-worker.js`       | Offline app-shell cache for localhost / HTTPS installs.                                    |
-| `tests/smoke-test.mjs`    | Lightweight repo smoke checks (validates the public surface).                              |
-| `AUDIT-250.md`            | 250-point solo web-game quality audit and closure ledger.                                  |
-| `CHANGELOG.md`            | Version history.                                                                           |
-| `CLAUDE.md`               | Project context for AI coding assistants.                                                  |
-| `docs/assets/`            | README and repository presentation assets.                                                 |
-| `.github/ISSUE_TEMPLATE/` | Friendly issue forms for bugs, ideas, and accessibility feedback.                          |
-| `.github/workflows/ci.yml` | GitHub Actions smoke check for pushes and pull requests.                                  |
-| `.memory/`                | Project context notes for future maintainers and AI assistants.                            |
-| `LICENSE.txt`             | AGPL-3.0-or-later license text.                                                            |
+| Path | Purpose |
+| --- | --- |
+| `index.html` | Semantic shell, canvas, drawer, tutorial, and install metadata |
+| `style.css` | Layout, theme system, responsive rules, and accessibility styling |
+| `game.js` | Main engine file with all runtime logic |
+| `manifest.webmanifest` | Install metadata for PWA flows |
+| `service-worker.js` | Minimal offline shell cache |
+| `tests/smoke-test.mjs` | Syntax and surface-area smoke checks |
+| `docs/architecture_master_blueprint.md` | Practical architecture reference for maintainers |
+| `docs/audit_strict_250_point_inspection.md` | Detailed implementation audit notes |
+| `AUDIT-250.md` | Repo closure ledger and checklist-style audit |
+| `CLAUDE.md` | AI assistant guidance for this codebase |
+| `.github/` | CI workflow, issue templates, and Copilot guidance |
+| `.memory/` | Project notes for future maintainers and assistant sessions |
+
+## Accessibility
+
+Accessibility is part of the product, not cleanup work after the fact.
+
+- Fully keyboard-playable core loop.
+- ARIA live region for score and status updates.
+- Focus-managed customizer drawer with inert background handling.
+- Reduced-motion support for effects, weather, particles, and shake.
+- Better contrast handling for high-contrast environments.
+- Skip link and semantic landmarks for faster navigation.
+
+## Browser Support
+
+- Chrome and Edge 105+
+- Firefox 128+
+- Safari 16.4+
+- Samsung Internet 21+
+- Current iOS Safari and Android Chrome
+
+## Documentation Guide
+
+If you are new to the repo, read the docs in this order:
+
+1. `README.md` for the product and workflow overview.
+2. `docs/architecture_master_blueprint.md` for the runtime layout.
+3. `CONTRIBUTING.md` for change boundaries and review expectations.
+4. `CLAUDE.md` for AI-assistant-specific guardrails.
 
 ## Contributing
 
-Contributions are welcome when they keep the game calm, accessible, dependency-free, and easy
-to run. Start with [CONTRIBUTING.md](CONTRIBUTING.md), then use the issue templates for bugs,
-feature ideas, or accessibility feedback.
+Small, focused changes are preferred. Keep the project dependency-free, browser-first, and calm by default.
 
-Good first areas:
-
-- Theme polish and seasonal palettes.
-- Accessibility testing across browsers and assistive tech.
-- Documentation improvements.
-- Tiny quality-of-life improvements that preserve the no-build-step setup.
+See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ## Support
 
-Need help running the game or reporting a problem? See [SUPPORT.md](SUPPORT.md).
+If the game does not run as expected, start with [SUPPORT.md](SUPPORT.md).
 
 ## License
 
 AGPL-3.0-or-later. See [LICENSE.txt](LICENSE.txt).
 
-If you run a modified version on a public server, offer users the matching source code.
-
----
-
-Built for players who want the joy of Flappy Bird with a little more grace in the wings.
+If you run a modified version on a public server, offer users the matching source code for that version.
