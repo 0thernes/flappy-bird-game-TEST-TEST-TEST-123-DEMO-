@@ -72,7 +72,7 @@ assert.match(
 );
 assert.match(
   textFiles.serviceWorker,
-  /CACHE_NAME\s*=\s*["']flappy-calm-v2\.0\.2["']/,
+  /CACHE_NAME\s*=\s*["']flappy-calm-v2\.2\.0["']/,
   'service worker cache version must match release',
 );
 for (const shellFile of [
