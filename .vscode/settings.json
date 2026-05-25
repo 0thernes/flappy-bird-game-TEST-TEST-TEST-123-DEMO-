@@ -9,11 +9,10 @@
   "files.insertFinalNewline": true,
   "html.format.indentInnerHtml": true,
   "css.format.enable": true,
-  "javascript.format.semicolons": "insert",
-  "javascript.preferences.quoteStyle": "single",
+  "js/ts.format.semicolons": "insert",
+  "js/ts.preferences.quoteStyle": "single",
   "eslint.enable": false,
   "liveServer.settings.port": 5500,
-  "liveServer.settings.root": ".",
   "liveServer.settings.open": false,
   "js/ts.implicitProjectConfig.checkJs": true,
   "cSpell.words": [
