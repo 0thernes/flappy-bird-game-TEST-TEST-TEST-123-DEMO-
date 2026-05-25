@@ -67,15 +67,12 @@
     "MENTS",
     "overscales",
     "pointerup",
+    "pointercancel",
+    "keyup",
+    "fullscreenchange",
     "PRNG",
     "thernes",
     "touchend"
   ],
-  "ignorePaths": [
-    "LICENSE*",
-    "node_modules/**",
-    "dist/**",
-    "build/**",
-    ".git/**"
-  ]
+  "ignorePaths": ["LICENSE*", "node_modules/**", "dist/**", "build/**", ".git/**"]
 }

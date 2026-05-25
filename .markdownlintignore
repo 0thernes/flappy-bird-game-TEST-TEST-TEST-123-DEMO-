@@ -1,4 +1,3 @@
-# markdownlint ignore patterns
-
-LICENSE*
+.markdownlintignore
+LICENSE.txt
 docs/assessment_deep_analysis.md

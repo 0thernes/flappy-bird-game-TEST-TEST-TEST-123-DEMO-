@@ -1,20 +1,20 @@
 // @ts-check
 /// <reference lib="webworker" />
-"use strict";
+'use strict';
 
 /** @type {ServiceWorkerGlobalScope} */
 const sw = /** @type {any} */ (self);
 
-const CACHE_NAME = "flappy-calm-v2.0.2";
+const CACHE_NAME = 'flappy-calm-v2.0.2';
 const APP_SHELL = Object.freeze([
-  "./",
-  "./index.html",
-  "./style.css",
-  "./game.js",
-  "./manifest.webmanifest",
+  './',
+  './index.html',
+  './style.css',
+  './game.js',
+  './manifest.webmanifest',
 ]);
 
-sw.addEventListener("install", (/** @type {ExtendableEvent} */ event) => {
+sw.addEventListener('install', (/** @type {ExtendableEvent} */ event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
@@ -23,22 +23,20 @@ sw.addEventListener("install", (/** @type {ExtendableEvent} */ event) => {
   );
 });
 
-sw.addEventListener("activate", (/** @type {ExtendableEvent} */ event) => {
+sw.addEventListener('activate', (/** @type {ExtendableEvent} */ event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key)),
-      ))
+      .then((keys) =>
+        Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))),
+      )
       .then(() => sw.clients.claim()),
   );
 });
 
-sw.addEventListener("fetch", (/** @type {FetchEvent} */ event) => {
+sw.addEventListener('fetch', (/** @type {FetchEvent} */ event) => {
   const request = event.request;
-  if (request.method !== "GET") return;
+  if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
   if (url.origin !== sw.location.origin) return;
@@ -59,8 +57,8 @@ async function cacheFirst(request) {
     }
     return response;
   } catch {
-    if (request.mode === "navigate") {
-      const fallback = await caches.match("./index.html");
+    if (request.mode === 'navigate') {
+      const fallback = await caches.match('./index.html');
       if (fallback) return fallback;
     }
     return Response.error();
@@ -69,8 +67,6 @@ async function cacheFirst(request) {
 
 /** @param {Request} request */
 function isAppShellRequest(request) {
-  if (request.mode === "navigate") return true;
-  return APP_SHELL
-    .map((path) => new URL(path, sw.registration.scope).href)
-    .includes(request.url);
+  if (request.mode === 'navigate') return true;
+  return APP_SHELL.map((path) => new URL(path, sw.registration.scope).href).includes(request.url);
 }
