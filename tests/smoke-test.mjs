@@ -183,7 +183,8 @@ assert.match(textFiles.readme, /Feather Shield/i, 'README should mention the shi
 assert.match(textFiles.changelog, /2\.0\.0/, 'CHANGELOG should include v2.0.0');
 assert.match(textFiles.claudeMd, /Hard rules/, 'CLAUDE.md should declare hard rules');
 assert.match(textFiles.workflow, /npm run check/, 'CI must run npm run check');
-assert.match(textFiles.workflow, /actions\/setup-node@v4/, 'CI must configure Node.js');
+// Pin-agnostic: matches a version tag (@v4) or a SHA pin (@<40 hex>) so Dependabot bumps don't break this.
+assert.match(textFiles.workflow, /actions\/setup-node@\S+/, 'CI must configure Node.js');
 
 // Expanded achievements present in HTML
 for (const id of [

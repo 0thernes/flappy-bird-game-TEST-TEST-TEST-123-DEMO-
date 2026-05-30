@@ -168,8 +168,7 @@ For the deeper runtime walkthrough, read [docs/architecture_master_blueprint.md]
 | `service-worker.js` | Minimal offline shell cache |
 | `tests/smoke-test.mjs` | Syntax and surface-area smoke checks |
 | `docs/architecture_master_blueprint.md` | Practical architecture reference for maintainers |
-| `docs/audit_strict_250_point_inspection.md` | Detailed implementation audit notes |
-| `AUDIT-250.md` | Repo closure ledger and checklist-style audit |
+| `AUDIT-250.md` | Canonical 250-point audit (checklist-style) |
 | `CLAUDE.md` | AI assistant guidance for this codebase |
 | `.github/` | CI workflow, issue templates, and Copilot guidance |
 | `.memory/` | Project notes for future maintainers and assistant sessions |
