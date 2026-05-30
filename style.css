@@ -480,6 +480,7 @@
     z-index: 5;
     background: rgba(0, 0, 0, 0.55);
     border-radius: calc(var(--radius-panel) - 0.1rem);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
   }
   .tutorial-overlay.show { display: flex; }

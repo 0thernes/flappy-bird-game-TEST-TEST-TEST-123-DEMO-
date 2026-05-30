@@ -35,7 +35,7 @@ Calm Edition keeps the fast arcade loop, then softens the failure edges: slower 
 
 - Calm physics tuned for readable timing.
 - Full mobile control bar with Brake, Flap, and Dive.
-- Four themes with matching atmosphere and music.
+- Five themes with matching atmosphere and music.
 - Daily Seed mode for repeatable runs by date.
 - Feather Shield for one graceful recovery.
 - Procedural music and sound effects built with Web Audio.

@@ -7,9 +7,16 @@ All notable changes to this project are documented here.
 ### Added
 
 - Added a fifth `Meadow` theme with its own palette, music loop, theme-color metadata, and gentle drifting pollen flecks that respect `prefers-reduced-motion`.
+- Headless behavioral test harness (`tests/engine-test.mjs`) asserting physics, collision, emotion, RNG, and storage invariants — zero dependencies, wired into `npm run check`.
+- Zero-dependency static checks (`tests/static-checks.mjs`) that fail CI on duplicate object keys, duplicate achievement ids, and self-comparisons.
+- Automated type checking (`npm run typecheck`) via ephemeral TypeScript as a dedicated CI step; `game.js` is fully `checkJs`-clean.
+- Strict Content-Security-Policy plus absolute `og:`/`twitter:` share metadata in `index.html`.
+- `.github/dependabot.yml` to keep the SHA-pinned GitHub Actions current automatically.
 
 ### Changed
 
+- SHA-pinned the GitHub Actions (`checkout`, `setup-node`) to commit SHAs for supply-chain safety.
+- Consolidated the audit documentation down to a single canonical `AUDIT-250.md`.
 - Reworked the Zen Customizer theme selector into an auto-fit grid so all five themes sit cleanly without the old awkward wrapping.
 - Polished active theme buttons with a subtle lift and stronger theme-aware glow so selection feedback feels more intentional.
 - Updated Theme Explorer achievement progress to track all available themes dynamically.
