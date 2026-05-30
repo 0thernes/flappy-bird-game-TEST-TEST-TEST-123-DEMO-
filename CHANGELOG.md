@@ -12,6 +12,7 @@ All notable changes to this project are documented here.
 - Automated type checking (`npm run typecheck`) via ephemeral TypeScript as a dedicated CI step; `game.js` is fully `checkJs`-clean.
 - Strict Content-Security-Policy plus absolute `og:`/`twitter:` share metadata in `index.html`.
 - `.github/dependabot.yml` to keep the SHA-pinned GitHub Actions current automatically.
+- Hands-free autonomous merge pipeline: branch protection (required CI, PR-gated, force-push and deletion blocked) plus a Dependabot auto-merge workflow. Changes land automatically once CI is green, with no human clicks, while preserving full PR, CI, and git history.
 
 ### Changed
 

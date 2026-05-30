@@ -36,6 +36,18 @@ The runtime is intentionally simple:
 - Do not split `style.css` into multiple files.
 - Keep the service worker tiny and app-shell-focused.
 
+## Change And Merge Flow (required — enforced by branch protection)
+
+`main` is protected; direct pushes are rejected. Every change — human or agent — follows the same path:
+
+1. Create a branch.
+2. Commit there.
+3. Open a pull request.
+4. CI (`Smoke check`) must pass: static-checks, engine tests, typecheck, smoke.
+5. The PR merges automatically once green — no human approval is required. Dependabot PRs auto-merge the same way.
+
+Do not attempt to push to `main` directly; it will be rejected. Keep PRs small and single-purpose so the gate stays fast and merge collisions stay rare.
+
 ## Runtime Rules
 
 - Put tunable constants in `CONFIG`.
