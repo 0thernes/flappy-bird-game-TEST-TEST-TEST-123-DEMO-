@@ -5,7 +5,7 @@
   "description": "A cinematic, calm, accessible, dependency-free Flappy Bird with golden godrays, living bird character, and serene atmosphere. Browser + PWA, zero dependencies.",
   "type": "module",
   "scripts": {
-    "check": "node --check game.js && node --check service-worker.js && node tests/smoke-test.mjs",
+    "check": "node --check game.js && node --check service-worker.js && node tests/static-checks.mjs && node tests/smoke-test.mjs",
     "serve": "python -m http.server 8000 --bind 127.0.0.1"
   },
   "engines": {

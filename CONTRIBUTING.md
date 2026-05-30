@@ -23,6 +23,23 @@ Those files explain the product boundaries, runtime structure, and guardrails th
 - Favor calm, readable, forgiving interactions over punishing ones.
 - Keep documentation accurate when behavior changes.
 
+## Working In Parallel (Multiple Agents Or Contributors)
+
+`game.js` is one large single-file engine, which makes it prone to merge
+collisions when several people — or several AI agents — edit it at once. The
+duplicate-key bugs in earlier versions (two `meadow` theme blocks, two
+`ThemeExplorer` achievements) came from exactly this.
+
+To avoid it:
+
+- One contributor (or agent) per branch. Do not edit `game.js` directly on `main`.
+- Rebase onto the latest `main` before starting work.
+- Run `npm run check` locally before opening a PR. The static checks
+  (`tests/static-checks.mjs`) catch duplicate object keys, duplicate achievement
+  ids, and self-comparisons that `node --check` accepts silently.
+- Merge only when CI is green.
+- Keep PRs small and single-purpose so collisions stay easy to resolve.
+
 ## Before You Open A Pull Request
 
 1. Run `npm run check`.

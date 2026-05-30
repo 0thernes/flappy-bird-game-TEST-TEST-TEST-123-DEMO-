@@ -524,12 +524,6 @@ const musicThemes = {
   },
   aurora: { notes: [277, 311, 349, 415, 349, 311], wave: 'sine', subWave: 'sine', interval: 0.5 },
   meadow: {
-    notes: [247, 294, 370, 494, 370, 330],
-    wave: 'triangle',
-    subWave: 'sine',
-    interval: 0.48,
-  },
-  meadow: {
     notes: [262, 294, 349, 440, 392, 349],
     wave: 'sine',
     subWave: 'triangle',
@@ -789,22 +783,6 @@ const THEME_TABLE = Object.freeze({
     scoreParticle: '#a78bfa',
   },
   meadow: {
-    bird: {
-      calm: '#f6e27a',
-      happy: '#fde68a',
-      scared: '#d7d977',
-      determined: '#86c95a',
-      dizzy: '#d5c460',
-      beak: '#f59e0b',
-      hl: '#fff7c2',
-      shadow: '#c5b14c',
-    },
-    ground: { sand: '#b79e58', grass1: '#79c26d', grass2: '#4e8d4a', dirt: '#7e6840' },
-    sky: { h1: 110, h2: 130, cAlpha: 0.32 },
-    pipe: { hue: 105, cap: 72 },
-    trail: '#fde68a',
-    flapParticle: '#fef3c7',
-    scoreParticle: '#facc15',
     bird: {
       calm: '#f4d35e',
       happy: '#f9c74f',
@@ -1632,7 +1610,7 @@ function updateShieldBubbles() {
       hapticPulse(40);
       spawnParticles(bx, by, 18, '#ffd700', 4);
       pipe.shieldBubble = null;
-      syncStatsAndAchievements(true);
+      persistStatsHot();
       announce('Feather Shield activated.');
     }
   }
@@ -1697,7 +1675,8 @@ function checkCollisions() {
         hapticPulse(80);
         spawnParticles(bird.x, bird.y, 25, '#ffd700', 6);
         state.shieldsSavedCount++;
-        syncStatsAndAchievements(true);
+        state.afterglowShieldUsed = true; // per-run flag for the Afterglow reflection
+        persistStatsHot();
         announce('Feather Shield absorbed collision. Invincible.');
         return;
       } else if (state.isInvincible) {
@@ -1727,7 +1706,7 @@ function checkCollisions() {
         state.calmMeter = Math.min(1.0, state.calmMeter + 0.05);
         sfxNearMiss();
         hapticTap();
-        syncStatsAndAchievements(true);
+        persistStatsHot();
       }
     }
   }
@@ -2405,6 +2384,8 @@ function setCustomizerOpen(isOpen, restoreFocus = true) {
   dom.drawerToggle?.setAttribute('aria-expanded', String(isOpen));
   dom.drawerToggle?.setAttribute('aria-pressed', String(isOpen));
 
+  if (isOpen) drawSparkline(); // refresh now that the drawer (and its canvas) is visible
+
   if (isOpen && state.phase === 'play' && !state.paused) {
     drawerWasPlaying = true;
     togglePause(true);
@@ -2665,6 +2646,22 @@ function syncStatsAndAchievements(saveToStorage = false) {
   checkAchievements();
 }
 
+let lastHotPersistAtSec = -1e9;
+/**
+ * Hot-path stats persistence used during active play (near-miss, shield events).
+ * Always refreshes the DOM + achievement checks, but throttles the synchronous
+ * localStorage write to avoid per-event jank. One-shot events (game over, theme
+ * change, achievement unlock, reset) still persist immediately via (true).
+ */
+function persistStatsHot() {
+  if (state.elapsedSec - lastHotPersistAtSec > 0.5) {
+    lastHotPersistAtSec = state.elapsedSec;
+    syncStatsAndAchievements(true);
+  } else {
+    syncStatsAndAchievements(false);
+  }
+}
+
 function resetStats() {
   state.zenTimeSec = 0;
   state.shieldsSavedCount = 0;
@@ -2728,12 +2725,6 @@ const ACHIEVEMENTS = [
     name: 'Theme Explorer',
     check: () => state.playedThemes.size >= THEMES.length,
     progress: () => `${Math.min(state.playedThemes.size, THEMES.length)}/${THEMES.length}`,
-  },
-  {
-    id: 'ThemeExplorer',
-    name: 'Theme Explorer',
-    check: () => state.playedThemes.size >= 5,
-    progress: () => `${state.playedThemes.size}/5`,
   },
   {
     id: 'CalmMarathon',
@@ -2840,6 +2831,9 @@ function showToast(text, type = 'default') {
 function drawSparkline() {
   const c = dom.sparkline;
   if (!c) return;
+  // The sparkline is only visible inside the open drawer. Skipping it while closed
+  // avoids a getBoundingClientRect() forced layout on the gameplay hot path.
+  if (!isDrawerOpen()) return;
   const cx = c.getContext('2d');
   if (!cx) return;
   // Adapt buffer to displayed size + DPR
@@ -3028,8 +3022,9 @@ function gameOver() {
   if (state.score >= 10) state.currentStreak++;
   else state.currentStreak = 0;
 
-  // Capture run qualities for the Afterglow reflection
-  state.afterglowShieldUsed = state.shieldsSavedCount > (state.shieldsSavedCount || 0); // simplistic; better would be a per-run flag but this works for now
+  // Capture run qualities for the Afterglow reflection.
+  // afterglowShieldUsed is set true in checkCollisions when a shield is consumed this run;
+  // resetGame clears it. (Previously a no-op self-comparison that was always false.)
   state.afterglowBrakeHeavy = state.brakeUseCount >= 6;
 
   state.shakeAmount = state.reducedMotion ? 0 : 6.0;
